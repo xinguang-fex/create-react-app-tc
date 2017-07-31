@@ -1,10 +1,16 @@
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
-export class MyComponent extends Component {
+import './index.scss'
+
+class MyComponent extends Component {
+    constructor(props) {
+        super(props)
+    }
     render() {
+        console.log('PRODUCTION',PRODUCTION)
         return (
             <div>
-                Hello
+                Hello World!
             </div>
         )
     }

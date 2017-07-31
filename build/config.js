@@ -2,7 +2,7 @@ const path = require('path')
 const fs = require('fs')
 const filePath = {
     outputPath: path.resolve(__dirname, '../dist'),
-    publicPath: '/'
+    publicPath: '/dist/'
 }
 
 const pagesPath = path.resolve(__dirname, '../src/views')

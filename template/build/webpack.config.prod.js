@@ -25,7 +25,7 @@ const webpackConfig = {
         publicPath: config.filePath.publicPath
     },
     cache: false,
-    devtool: 'cheap-module-source-map',
+    devtool: false,
     target: 'web',
     resolve: {
         extensions: ['.js', '.jsx'],
@@ -36,10 +36,11 @@ const webpackConfig = {
         alias: {
             'components': path.resolve(__dirname, '../src/components'),
             'utils': path.resolve(__dirname, '../src/utils'),
-            'public': path.resolve(__dirname, '../public'),
+            'assets': path.resolve(__dirname, '../src/assets'),
         }
     },
     module: {
+        noParse: /zepto|axios/,
         rules: [
             {
                 test: require.resolve('zepto'),
@@ -69,7 +70,7 @@ const webpackConfig = {
                         options: {
                             plugins: () => [autoprefixer]
                         }
-                    },{
+                    }, {
                         "loader": "sass-loader"
                     }]
                 }),
@@ -93,7 +94,7 @@ const webpackConfig = {
             },
             {
                 test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg)$/,
-                use: ['url-loader?limit=1&name=res/[name].[chunkhash:8].[ext]']
+                use: ['file-loader?name=res/[name].[hash:8].[ext]']
             }
         ]
     },
@@ -101,7 +102,12 @@ const webpackConfig = {
         new ManifestPlugin,
         new UglifyJSPlugin(),
         new webpack.DefinePlugin({
-            'PRODUCTION': JSON.stringify(true)
+            'PRODUCTION': JSON.stringify(true),
+            //enable production build for react
+            //https://facebook.github.io/react/docs/optimizing-performance.html#use-the-production-build
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
         }),
         new ExtractTextPlugin('[name]/styles.[chunkhash:8].css'),
         new webpack.optimize.CommonsChunkPlugin({

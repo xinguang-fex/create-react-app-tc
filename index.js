@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require('fs')
 const path = require('path')
 const shelljs = require('shelljs')
@@ -21,7 +23,7 @@ function createSuc(projectName) {
     console.log('You can run the command to run the app:')
     console.log('1. ' + 'cd ' + projectName)
     console.log('2. ' + 'npm install')
-    console.log('3. ' + 'npm run dev')
+    console.log('3. ' + 'npm start')
 }
 let projectName
 program

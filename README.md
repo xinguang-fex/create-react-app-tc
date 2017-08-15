@@ -18,26 +18,26 @@
 ```
 .
 ├── README.md
-├── build                       构建文件目录
-├── docs                        文档目录
-├── index.html                  首页模板，html-webpack-plugin以此生成页面
+├── build                       # 构建文件配置目录
+├── docs                        # 文档目录
+├── index.html                  # 首页模板，html-webpack-plugin以此生成页面
 ├── node_modules
 ├── package.json
 └── src
-    ├── assets                   公共静态资源目录
-    ├── components               组件目录
-    │   └── TopBar               TopBar组件
+    ├── assets                   # 公共静态资源目录
+    ├── components               # 组件目录
+    │   └── TopBar               # TopBar组件
     │       ├── index.jsx
     │       └── index.scss
-    ├── utils                    工具函数目录
-    └── views                    页面目录
-        └── Test                 Test页面
-            ├── config.json      页面title等配置，为html-webpack-plugin提供配置
-            ├── img              页面图片目录，如果页面图片少，可直接把图片放在外层
+    ├── utils                    # 工具函数目录
+    └── views                    # 页面目录
+        └── Test                 # Test页面
+            ├── config.json      # 页面title等配置，html-webpack-plugin提供配置
+            ├── img              # 页面图片目录，如果页面图片少，可直接放在外层
             │   └── react.logo.svg
-            ├── index.jsx
-            └── index.scss
-
+            ├── index.jsx        # 页面入口js 处理文件
+            └── index.scss       # 页面内部样式文件
+        └── Other...             # 其他页面
 ```
 
 上面的目录结构中，build为构建文件目录，build的目录为dist目录。

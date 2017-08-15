@@ -1,8 +1,21 @@
 {
+  "name": "create-react-app-tc",
+  "description": "create react app",
+  "version": "0.1.3",
+  "main": "index.js",
+  "author": "mc(XINGUANG MENG-CHUANG)",
+  "contributors":[{  
+          "name":"mc(MENG-CHUANG)",  
+          "web":"https://github.com/mengch"  
+      }, {
+          "name":"catherine(ZHAO SHUANGSHUANG)",  
+          "web":"https://github.com/katherinesnow"  
+      }
+  ], 
   "scripts": {
-    "test": "test",
-    "dev": "node ./build/webpack.config.dev.js",
-    "build": "node ./build/webpack.config.prod.js"
+    // "test": "test",
+    // "dev": "node ./build/webpack.config.dev.js",
+    // "build": "node ./build/webpack.config.prod.js"
   },
   "bin": {
     "create-react-app-tc": "./index.js"
@@ -13,23 +26,20 @@
     "inquirer": "^3.2.1",
     "shelljs": "^0.7.8"
   },
-  "name": "create-react-app-tc",
-  "description": "create react app",
-  "version": "0.1.3",
-  "main": "index.js",
+  
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mengch/create-react-app-tc.git"
+    "url": "git+https://github.com/xinguang-fex/create-react-app-tc.git"
   },
   "keywords": [
     "react",
     "app"
   ],
-  "author": "mc",
+
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mengch/create-react-app-tc/issues"
+    "url": "https://github.com/xinguang-fex/create-react-app-tc/issues"
   },
-  "homepage": "https://github.com/mengch/create-react-app-tc#readme"
+  "homepage": "https://github.com/xinguang-fex/create-react-app-tc#readme"
 }

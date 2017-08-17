@@ -2,7 +2,7 @@ const path = require('path')
 const fs = require('fs')
 const filePath = {
     outputPath: path.resolve(__dirname, '../dist'),
-    publicPath: '/dist/'
+    publicPath: '/'
 }
 
 const pagesPath = path.resolve(__dirname, '../src/views')
@@ -14,7 +14,7 @@ const pages = pagesDir.map(function (page) {
     }
 })
 
-console.log('pages', pages)
+// console.log('pages', pages)
 module.exports = {
     filePath: filePath,
     pages: pages,

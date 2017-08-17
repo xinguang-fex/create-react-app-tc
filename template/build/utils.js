@@ -12,7 +12,7 @@ function injectHtmlWebpack(webpackConfig) {
                 filename: `${item.name}/index.html`,
                 title: require(configPath).title,
                 template: templatePath,
-                //chunks: [`${item.name}`],
+                // chunks: [`${item.name}`],
                 inject: true
             })
         );

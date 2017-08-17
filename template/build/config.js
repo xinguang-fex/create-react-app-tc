@@ -7,6 +7,7 @@ const filePath = {
 
 const pagesPath = path.resolve(__dirname, '../src/views')
 const pagesDir = fs.readdirSync(pagesPath)
+
 const pages = pagesDir.map(function (page) {
     return {
         name: page,
@@ -14,7 +15,6 @@ const pages = pagesDir.map(function (page) {
     }
 })
 
-// console.log('pages', pages)
 module.exports = {
     filePath: filePath,
     pages: pages,

@@ -43,7 +43,7 @@ const webpackConfig = {
         // vendor: ["react", "react-dom", "zepto"]
     },
     output: {
-        path: config.filePath.outputPath,
+        path: baseConfig.filePath.outputPath,
         filename: '[name]/index.[chunkhash:8].js',
         publicPath: process.env.NODE_ENV === 'testing' ? (test_Dir + config.filePath.publicPath ) : config.filePath.publicPath
     },
@@ -132,6 +132,7 @@ const webpackConfig = {
             'process.env':  env_config.build.env
         }),
         new ExtractTextPlugin('[name]/styles.[chunkhash:8].css'),
+
         new webpack.NoErrorsPlugin(),
         // new webpack.optimize.CommonsChunkPlugin({
         //     name: "vendor",
@@ -163,7 +164,7 @@ const webpackConfig = {
     ]
 };
 function injectEntry() {
-    config.pages.forEach(function (item) {
+    baseConfig.pages.forEach(function (item) {
         webpackConfig.entry[item.name] = [
             item.pagePath
         ];
@@ -172,7 +173,7 @@ function injectEntry() {
 
 function injectHtmlWebpack() {
     let configPath
-    config.pages.forEach(function (item) {
+    baseConfig.pages.forEach(function (item) {
         configPath = path.resolve(__dirname, `../src/views/${item.name}/config.json`)
         webpackConfig.plugins.push(
             new HtmlWebpackPlugin({
@@ -206,5 +207,6 @@ webpack(webpackConfig, (err) => {
     if (err) {
         throw err
     }
+    console.log('compile time: ',+new Date() - date)
 })
 

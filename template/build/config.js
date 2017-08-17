@@ -2,11 +2,15 @@ const path = require('path')
 const fs = require('fs')
 const filePath = {
     outputPath: path.resolve(__dirname, '../dist'),
-    publicPath: '/dist/'
+    rootPath: path.resolve(__dirname, '../'),
+    publicPath: '/dist/',
+    vendorManifestPath: path.resolve(__dirname, '../dist/vendor/vendor-manifest.json'),
+    templatePath: path.resolve(__dirname, '../index.html')
 }
 
 const pagesPath = path.resolve(__dirname, '../src/views')
 const pagesDir = fs.readdirSync(pagesPath)
+
 const pages = pagesDir.map(function (page) {
     return {
         name: page,
@@ -14,7 +18,6 @@ const pages = pagesDir.map(function (page) {
     }
 })
 
-console.log('pages', pages)
 module.exports = {
     filePath: filePath,
     pages: pages,

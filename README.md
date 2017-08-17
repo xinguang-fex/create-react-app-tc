@@ -16,7 +16,7 @@
 
 以下是生成的新项目的目录结构。
 ```
-.
+
 ├── README.md
 ├── build                       # 构建文件配置目录
 ├── docs                        # 文档目录
@@ -72,31 +72,39 @@ utils目录用来存放自己的工具函数。项目创建成功后的package.j
 
 ## 构建
 ```
-npm run build
+先生成dll文件
+1.npm run build-dll
+再构建业务文件
+2.npm run build
 ```
 构建后产出的文件会放在dist目录下。
 下面为产出的内容目录结构：
 ```
-├── Test
-│   ├── index.78265c92.js
-│   ├── index.html
-│   └── styles.78265c92.css
-├── manifest.json
-├── res
-│   └── react.logo.876a8325.svg
-└── vendor
-    └── index.da952f59.js
-```
-Test为Test页面内容的目录，每个页面会有一个对应的目录。vendor为公共库的打包文件。res为静态资源的目录。文件加上了8位的chunkhash。
-manifest.json为打包后的文件映射，内容如下：
+├── dist
+│   ├── Test
+│   │   ├── index.5ed04bc6.js
+│   │   ├── index.html
+│   │   └── styles.5ed04bc6.css
+│   ├── manifest.json
+│   ├── res
+│   │   └── react.logo.876a8325.svg
+│   ├── vendor
+│   │   ├── vendor-manifest.json
+│   │   └── vendor.5581a704.js
+│   └── vendor-name.json
 
 ```
-{
-  "Test.css": "Test/styles.78265c92.css",
-  "Test.js": "Test/index.78265c92.js",
-  "res/react.logo.svg": "res/react.logo.876a8325.svg",
-  "vendor.js": "vendor/index.da952f59.js"
-}
-```
+Test为Test页面内容的目录，每个页面会有一个对应的目录。
 
-manifest.json文件每次构建后会被更新，因此我们可以根据此文件定期对服务器上的冗余资源做清理。
+res为静态资源的目录。
+
+vendor为公共库的打包文件。
+
+我们需要注意的是目录中的三个json文件。
+
+manifest.json是```npm run build```命令执行时生成的，目的是保存构建时生成的带hash的文件和源文件的映射关系。以后定期清理目录的时候会根据此文件删除冗余的文件。
+
+vendor-name.json是```npm run build-dll```命令生成的，保存vendor文件生成的文件名，用来替换index.html模板中的vendor.js的hash值。使html-webpack-plugin插件生成的页面模板中引用的vendor.js是最新的。
+
+vendor目录下的vendor-manifest.json是```npm run build-dll```生成的，保存的是dll文件的模版引用的关系。在webpack的DllReferencePlugin插件中我们要引用此文件，
+使得我们在业务文件中引用的模块能够被正确的链接到vendor.js中。具体使用看DllPlugin的使用文档。

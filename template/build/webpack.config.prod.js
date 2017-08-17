@@ -9,20 +9,20 @@ const ip = require('ip')
 const open = require('open')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
-const config = require('./config')
+const baseConfig = require('./config')
 const templatePath = path.resolve(__dirname, '../index.html')
-
+var date = +new Date()
 const webpackConfig = {
     node: {
         fs: "empty"
     },
     entry: {
-        vendor: ["react", "react-dom", "zepto"]
+        //vendor: ["react", "react-dom"]
     },
     output: {
-        path: config.filePath.outputPath,
+        path: baseConfig.filePath.outputPath,
         filename: '[name]/index.[chunkhash:8].js',
-        publicPath: config.filePath.publicPath
+        publicPath: baseConfig.filePath.publicPath
     },
     cache: false,
     devtool: false,
@@ -102,7 +102,7 @@ const webpackConfig = {
         new ManifestPlugin,
         new UglifyJSPlugin(),
         new webpack.DefinePlugin({
-            'PRODUCTION': JSON.stringify(true),
+            'production': JSON.stringify(true),
             //enable production build for react
             //https://facebook.github.io/react/docs/optimizing-performance.html#use-the-production-build
             'process.env': {
@@ -110,19 +110,24 @@ const webpackConfig = {
             }
         }),
         new ExtractTextPlugin('[name]/styles.[chunkhash:8].css'),
-        new webpack.optimize.CommonsChunkPlugin({
+        /*new webpack.optimize.CommonsChunkPlugin({
             name: "vendor",
             minChunks: Infinity
+        }),*/
+        new webpack.DllReferencePlugin({
+            name: 'vendor',
+            context: baseConfig.filePath.rootPath,
+            manifest: require(baseConfig.filePath.vendorManifestPath),
         }),
-        new webpack.ProvidePlugin({
+        /*new webpack.ProvidePlugin({
             $: "zepto",
             zepto: "zepto",
             "window.zepto": "zepto"
-        })
+        })*/
     ]
 };
 function injectEntry() {
-    config.pages.forEach(function (item) {
+    baseConfig.pages.forEach(function (item) {
         webpackConfig.entry[item.name] = [
             item.pagePath
         ];
@@ -131,7 +136,7 @@ function injectEntry() {
 
 function injectHtmlWebpack() {
     let configPath
-    config.pages.forEach(function (item) {
+    baseConfig.pages.forEach(function (item) {
         configPath = path.resolve(__dirname, `../src/views/${item.name}/config.json`)
         webpackConfig.plugins.push(
             new HtmlWebpackPlugin({
@@ -165,5 +170,6 @@ webpack(webpackConfig, (err) => {
     if (err) {
         throw err
     }
+    console.log('compile time: ',+new Date() - date)
 })
 

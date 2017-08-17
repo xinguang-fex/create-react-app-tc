@@ -109,6 +109,7 @@ function injectEntry() {
         webpackConfig.entry[item.name] = [
             'webpack-dev-server/client?http://' + ip.address() + ':' + config.defaultPort,
             'webpack/hot/only-dev-server',
+            'babel-polyfill',
             item.pagePath
         ];
     });

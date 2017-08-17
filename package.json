@@ -13,9 +13,6 @@
       }
   ], 
   "scripts": {
-    // "test": "test",
-    // "dev": "node ./build/webpack.config.dev.js",
-    // "build": "node ./build/webpack.config.prod.js"
   },
   "bin": {
     "create-react-app-tc": "./index.js"

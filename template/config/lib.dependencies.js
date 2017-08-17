@@ -10,10 +10,10 @@ const lib = [
     'react-router-redux',
     'react-addons-pure-render-mixin',
     'react-addons-css-transition-group',
-    'redux-actions',
-    'redux-thunk',
-    'immutable',
-    'whatwg-fetch',
+    // 'redux-actions',
+    // 'redux-thunk',
+    // 'immutable',
+    // 'whatwg-fetch',
     "babel-polyfill"
 ];
 

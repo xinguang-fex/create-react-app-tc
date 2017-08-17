@@ -2,8 +2,6 @@ var path = require("path");
 var webpack = require('webpack');
 var lib = require("../config/lib.dependencies");
 
-var defaultSettings = require('./defaults');
-var filePath = defaultSettings.filePath;
 var isDebug = process.env.NODE_ENV  === "development";
 
 var outputPath = isDebug ? path.join(__dirname, "../common/debug") : path.join(__dirname, "../common/production"); //common/production

@@ -4,6 +4,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const ip = require('ip')
+var os = require('os');
 const open = require('open')
 const config= require('./config')
 const webpackDevServer = require('webpack-dev-server')
@@ -17,6 +18,8 @@ var nodeModulesPath = path.resolve(__dirname, '../node_modules');
 const utils = require('./utils')
 const templatePath = path.resolve(__dirname, '../index.html')
 const env_config = require('../config')
+
+
 /**
  * [resolve 公用获取路径方法]
  * @param  {[type]} dir [description]
@@ -25,7 +28,6 @@ const env_config = require('../config')
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
-
 
 var webpackConfig = {
     node: {
@@ -55,15 +57,15 @@ var webpackConfig = {
     module: {
         noParse: /zepto|axios/,
         rules: [
-            {
-                test: /\.(js|jsx)$/,
-                loader: 'eslint-loader',
-                enforce: 'pre',
-                include: [resolve('src')],
-                options: {
-                  formatter: require('eslint-friendly-formatter')
-                }
-            },
+            // {
+            //     test: /\.(js|jsx)$/,
+            //     loader: 'eslint-loader',
+            //     enforce: 'pre',
+            //     include: [resolve('src')],
+            //     options: {
+            //       formatter: require('eslint-friendly-formatter')
+            //     }
+            // },
             /*{
                 test: /\.js|jsx$/,
                 loader: 'happypack/loader?id=happybabel',
@@ -116,7 +118,7 @@ var webpackConfig = {
             },
             {
                 test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg)$/,
-                use: ['url-loader?limit=1&name=res/[name].[ext]']
+                use: ['file-loader?limit=1&name=res/[name].[ext]']
             }/*,
             {
                 test: /\.json$/,
@@ -130,7 +132,6 @@ var webpackConfig = {
             // 'PRODUCTION': JSON.stringify(false),
             //enable production build for react
             //https://facebook.github.io/react/docs/optimizing-performance.html#use-the-production-build
-            'process.env': env_config.dev.env.NODE_ENV
         }),
         new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin({

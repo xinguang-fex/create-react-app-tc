@@ -13,11 +13,10 @@ var AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 const config = require('./config')
 const templatePath = path.resolve(__dirname, '../index.html')
-var nodeModulesPath = path.resolve(__dirname, '../node_modules');
-
+const nodeModulesPath = path.resolve(__dirname, '../node_modules');
 
 const env_config = require('../config')
-
+var date = +new Date()
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -43,7 +42,7 @@ const webpackConfig = {
         // vendor: ["react", "react-dom", "zepto"]
     },
     output: {
-        path: baseConfig.filePath.outputPath,
+        path: config.filePath.outputPath,
         filename: '[name]/index.[chunkhash:8].js',
         publicPath: process.env.NODE_ENV === 'testing' ? (test_Dir + config.filePath.publicPath ) : config.filePath.publicPath
     },
@@ -164,7 +163,7 @@ const webpackConfig = {
     ]
 };
 function injectEntry() {
-    baseConfig.pages.forEach(function (item) {
+    config.pages.forEach(function (item) {
         webpackConfig.entry[item.name] = [
             item.pagePath
         ];
@@ -173,7 +172,7 @@ function injectEntry() {
 
 function injectHtmlWebpack() {
     let configPath
-    baseConfig.pages.forEach(function (item) {
+    config.pages.forEach(function (item) {
         configPath = path.resolve(__dirname, `../src/views/${item.name}/config.json`)
         webpackConfig.plugins.push(
             new HtmlWebpackPlugin({

@@ -19,30 +19,37 @@
 
 ├── README.md
 ├── build                       # 构建文件配置目录
+├── common                      # 本地开发和服务器环境动态链接库生成文件
 ├── docs                        # 文档目录
+├── config                      # 环境变量配置目录和动态链接库依赖配置库
+├── dist                        # 项目输出目录
 ├── index.html                  # 首页模板，html-webpack-plugin以此生成页面
 ├── node_modules
-├── package.json
 └── src
-    ├── assets                   # 公共静态资源目录
-    ├── components               # 组件目录
-    │   └── TopBar               # TopBar组件
-    │       ├── index.jsx
-    │       └── index.scss
-    ├── utils                    # 工具函数目录
-    └── views                    # 页面目录
-        └── Test                 # Test页面
-            ├── config.json      # 页面title等配置，html-webpack-plugin提供配置
-            ├── img              # 页面图片目录，如果页面图片少，可直接放在外层
-            │   └── react.logo.svg
-            ├── index.jsx        # 页面入口js 处理文件
-            └── index.scss       # 页面内部样式文件
-        └── Other...             # 其他页面
-```
+│    ├── assets                   # 公共静态资源目录
+│    ├── components               # 组件目录
+│    │   └── TopBar               # TopBar组件
+│    │       ├── index.jsx
+│    │       └── index.scss
+│    ├── utils                    # 工具函数目录
+│    └── views                    # 页面目录
+│        └── Test                 # Test页面
+│            ├── config.json      # title等配置，html-webpack-plugin提供配置
+│            ├── img              # 页面图片，如果页面图片少，可直接放在外层
+│            │   └── react.logo.svg
+│            ├── index.jsx        # 页面入口js 处理文件
+│            └── index.scss       # 页面内部样式文件
+│        └── Other...             # 其他页面
+├──  package.json
+├── .eslintignore # eslint 检测忽略文件
+├── .eslintrc.js  # eslint相关配置
+├── .gitignore    # git 忽略文件目录
+├── README.md     # 特定项目文档说明文件
 
-上面的目录结构中，build为构建文件目录，build的目录为dist目录。
+上面的目录结构中，build为构建文件配置目录，编译输出目录为dist
 
-src目录中，assets用来存放公共的静态资源文件。组件/页面级别的静态资源分别放在对应的组件/页面目录下面。
+src目录中，assets用来存放公共的静态资源文件。
+组件/页面级别的静态资源分别放在对应的组件/页面目录下面。
 
 components为组件目录，每个组件下面为组件的js/scss，以及图片等内容。
 
@@ -72,39 +79,57 @@ utils目录用来存放自己的工具函数。项目创建成功后的package.j
 
 ## 构建
 ```
-先生成dll文件
-1.npm run build-dll
-再构建业务文件
-2.npm run build
+
+## build Setup
+```bash
+# 先生成dll文件
+1.npm run dll(生产环境)
+2.npm run dll-debug (本地开发环境)
+```
+
+``` bash
+
+# 再构建业务文件
+# install dependencies
+npm install
+
+# build for local http:localhost:8094
+npm run compile:local (本地运行环境)
+
+# build for production with minification(develop website)
+npm run compile:dev (服务器开发环境~)
+
+# build for production with minification(test website)
+npm run compile:test (服务器测试环境)
+
+# build for production with minification(online website)
+npm run compile:build (服务器线上环境)
+
+```
+
 ```
 构建后产出的文件会放在dist目录下。
 下面为产出的内容目录结构：
+```
+
 ```
 ├── dist
 │   ├── Test
 │   │   ├── index.5ed04bc6.js
 │   │   ├── index.html
 │   │   └── styles.5ed04bc6.css
-│   ├── manifest.json
 │   ├── res
 │   │   └── react.logo.876a8325.svg
-│   ├── vendor
-│   │   ├── vendor-manifest.json
-│   │   └── vendor.5581a704.js
-│   └── vendor-name.json
+│   ├── common
+│   │   ├── lib
+│   │   │   ├── lib.js.map
+│   │   │   └── lib.js
 
 ```
 Test为Test页面内容的目录，每个页面会有一个对应的目录。
 
 res为静态资源的目录。
 
-vendor为公共库的打包文件。
-
-我们需要注意的是目录中的三个json文件。
-
-manifest.json是```npm run build```命令执行时生成的，目的是保存构建时生成的带hash的文件和源文件的映射关系。以后定期清理目录的时候会根据此文件删除冗余的文件。
-
-vendor-name.json是```npm run build-dll```命令生成的，保存vendor文件生成的文件名，用来替换index.html模板中的vendor.js的hash值。使html-webpack-plugin插件生成的页面模板中引用的vendor.js是最新的。
-
-vendor目录下的vendor-manifest.json是```npm run build-dll```生成的，保存的是dll文件的模版引用的关系。在webpack的DllReferencePlugin插件中我们要引用此文件，
+common 为公共库的打包文件: 其中的lib 文件是通过```npm run dll或者npm run dll-debug``` 生成的，在webpack的DllReferencePlugin插件中我们要引用此文件，
 使得我们在业务文件中引用的模块能够被正确的链接到vendor.js中。具体使用看DllPlugin的使用文档。
+

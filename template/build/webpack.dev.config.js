@@ -66,6 +66,7 @@ var webpackConfig = {
             //       formatter: require('eslint-friendly-formatter')
             //     }
             // },
+            // 
             /*{
                 test: /\.js|jsx$/,
                 loader: 'happypack/loader?id=happybabel',

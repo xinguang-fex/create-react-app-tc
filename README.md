@@ -42,6 +42,7 @@
 │        └── Other...             # 其他页面
 ├──  package.json
 ├── .eslintignore # eslint 检测忽略文件
+                    https://www.npmjs.com/package/eslint-plugin-react 说明
 ├── .eslintrc.js  # eslint相关配置
 ├── .gitignore    # git 忽略文件目录
 ├── README.md     # 特定项目文档说明文件
@@ -76,8 +77,6 @@ utils目录用来存放自己的工具函数。项目创建成功后的package.j
 * [zepto](https://github.com/madrobby/zepto) DOM操作库
 
 具体使用参考对应的Github项目说明文档。
-
-## 构建
 ```
 
 ## build Setup
@@ -133,3 +132,7 @@ res为静态资源的目录。
 common 为公共库的打包文件: 其中的lib 文件是通过```npm run dll或者npm run dll-debug``` 生成的，在webpack的DllReferencePlugin插件中我们要引用此文件，
 使得我们在业务文件中引用的模块能够被正确的链接到vendor.js中。具体使用看DllPlugin的使用文档。
 
+## Best Practice
+本项目为React生态脚手架，处理针对基本的开发规范做了限制:eslint:recommended，同时针对React 最佳实践规范做了开发阶段限制.
+
+![image](docs/eslint-plugin-react.png)

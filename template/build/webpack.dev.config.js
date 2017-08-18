@@ -57,15 +57,15 @@ var webpackConfig = {
     module: {
         noParse: /zepto|axios/,
         rules: [
-            // {
-            //     test: /\.(js|jsx)$/,
-            //     loader: 'eslint-loader',
-            //     enforce: 'pre',
-            //     include: [resolve('src')],
-            //     options: {
-            //       formatter: require('eslint-friendly-formatter')
-            //     }
-            // },
+            {
+                test: /\.(js|jsx)$/,
+                loader: 'eslint-loader',
+                enforce: 'pre',
+                include: [resolve('src')],
+                options: {
+                  formatter: require('eslint-friendly-formatter')
+                }
+            },
             // 
             /*{
                 test: /\.js|jsx$/,

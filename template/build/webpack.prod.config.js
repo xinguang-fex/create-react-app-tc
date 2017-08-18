@@ -43,7 +43,7 @@ const webpackConfig = {
     },
     output: {
         path: config.filePath.outputPath,
-        filename: '[name]/index.[chunkhash:8].js',
+        filename: '[name]/index.[chunkhash].js',
         publicPath: process.env.NODE_ENV === 'testing' ? (test_Dir + config.filePath.publicPath ) : config.filePath.publicPath
     },
     cache: false,
@@ -123,14 +123,16 @@ const webpackConfig = {
     },
     plugins: [
         new webpack.optimize.AggressiveMergingPlugin(),
-        // new ManifestPlugin,
+        new ManifestPlugin,
         new UglifyJSPlugin(),
         new webpack.DefinePlugin({
             //enable production build for react
             //https://facebook.github.io/react/docs/optimizing-performance.html#use-the-production-build
             'process.env':  env_config.build.env
         }),
-        new ExtractTextPlugin('[name]/styles.[chunkhash:8].css'),
+        new ExtractTextPlugin({
+            filename: '[name]/styles.[contenthash].css'
+        }),
 
         new webpack.NoErrorsPlugin(),
         // new webpack.optimize.CommonsChunkPlugin({
@@ -144,22 +146,16 @@ const webpackConfig = {
         }),
         new webpack.DllReferencePlugin({
             context: __dirname,
-            manifest: require(env_config.dev.dll.manifest),
+            manifest: require(env_config.build.dll.manifest),
         }),
         new AddAssetHtmlPlugin([
             {
-                filepath: path.resolve(__dirname, env_config.dev.dll.fileName),
-                outputPath: path.join(env_config.dev.dll.outputPath),
-                publicPath: path.join(env_config.dev.dll.publicPath),
-                includeSourcemap: true
+                filepath: path.resolve(__dirname, env_config.build.dll.fileName),
+                outputPath: path.join(env_config.build.dll.outputPath),
+                publicPath: path.join(env_config.build.dll.publicPath),
+                includeSourcemap: false
             }
-        ])/*,
-        new HappyPack({
-            id: 'happybabel',
-            cache: true,
-            loaders: ['babel-loader?presets[]=es2015&presets[]=react&presets[]=stage-0&presets[]=stage-1&presets[]=stage-3'],
-            threadPool: happyThreadPool
-        })*/
+        ])
     ]
 };
 function injectEntry() {

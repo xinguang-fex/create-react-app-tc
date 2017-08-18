@@ -1,6 +1,7 @@
 var path = require("path");
 var webpack = require('webpack');
 var lib = require("../config/lib.dependencies");
+const ManifestPlugin = require('webpack-manifest-plugin')
 
 var isDebug = process.env.NODE_ENV  === "development";
 
@@ -22,9 +23,10 @@ var plugin = [
          */
         name: '[name]',
         context: __dirname
-    })/*,
-    // OccurenceOrderPlugin :为组件分配ID，通过这个插件webpack可以分析和优先考虑使用最多的模块，并为它们分配最小的ID
-    new webpack.optimize.OccurenceOrderPlugin()*/
+    }),
+    new ManifestPlugin({
+        fileName: 'vendor-name.json'
+    })
 ];
 
 
@@ -59,7 +61,7 @@ module.exports= {
     },
     output: {
         path: outputPath,
-        filename: '[name].js',
+        filename: isDebug ? '[name].js':'[name].[chunkhash:8].js',
         library: '[name]',
     },
     plugins: plugin

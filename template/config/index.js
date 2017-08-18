@@ -1,10 +1,17 @@
 var path = require('path')
+var prodVendorName,
+    devVendorName
+if(!process.env.NODE_ENV) {
+    devVendorName = require('../common/debug/vendor-name.json')['lib.js']
+}else {
+    prodVendorName = require('../common/production/vendor-name.json')['lib.js']
+}
 
 module.exports = {
   build: {
     dll:{
       basePath: "../common/production",
-      fileName: '../common/production/lib.js',
+      fileName: '../common/production/'+prodVendorName,
       manifest: '../common/production/mainfest.json',
       outputPath: "./common/lib", // 生成目录
       publicPath: "/common/lib" //注入地址
@@ -14,7 +21,7 @@ module.exports = {
   dev: {
     dll:{
       basePath: "../common/debug",
-      fileName: '../common/debug/lib.js',
+      fileName: '../common/debug/'+devVendorName,
       manifest: '../common/debug/mainfest.json',
       outputPath: "./common/lib", // 生成目录
       publicPath: "/common/lib" //注入地址

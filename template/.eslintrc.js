@@ -13,7 +13,10 @@ module.exports = {
   env: {
     browser: true,
   },
-  extends: 'eslint:recommended',
+  extends: [
+    'eslint:recommended',
+    "plugin:react/recommended"
+  ],
   plugins: [
     'html',
     "react"

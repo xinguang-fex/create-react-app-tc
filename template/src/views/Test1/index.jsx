@@ -2,8 +2,6 @@ import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import TopBar from 'components/TopBar'
 
-import Img from './img/react.logo.svg'
-
 import './index.scss'
 
 class MyComponent extends Component {
@@ -16,7 +14,6 @@ class MyComponent extends Component {
         return (
             <div>
                 Hello ~
-                <img src={Img} alt=""/>
                 <TopBar/>
             </div>
         )

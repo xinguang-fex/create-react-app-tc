@@ -10,8 +10,7 @@
     "compile:build": "cross-env  NODE_ENV=production node ./build/webpack.prod.config.js",
     "eslint": "eslint src/**",
     "dll": "cross-env NODE_ENV=production webpack --config ./build/webpack.dll.config.js --progress",
-    "dll-debug": "cross-env NODE_ENV=development webpack --config ./build/webpack.dll.config.js --progress",
-    "build-dll": "node ./build/webpack.config.vendor.js"
+    "dll-debug": "cross-env NODE_ENV=development webpack --config ./build/webpack.dll.config.js --progress"
   },
   "dependencies": {
     "axios": "^0.16.2",
